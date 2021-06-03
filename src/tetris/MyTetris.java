@@ -70,7 +70,7 @@ public class MyTetris extends JFrame {
 		
 	}
 
-	public TetrisCanvas getTetrisCanvas() {
-		return tetrisCanvas;
-	}
+//	public TetrisCanvas getTetrisCanvas() {
+//		return tetrisCanvas;
+//	}
 }

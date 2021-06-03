@@ -1,6 +1,7 @@
 package tetris;
 
 public class Bar extends Piece {
+	
 	public Bar(TetrisData data) {
 		super(data);
 		c[0] =  0;		r[0] =  0;
@@ -12,6 +13,7 @@ public class Bar extends Piece {
 	public int getType() {
 		return 1;
 	}
+	
 	public int roteType() {
 		return 2;
 	}

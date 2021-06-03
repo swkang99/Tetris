@@ -4,8 +4,8 @@ public class TetrisData {
 	public static final int ROW = 20;
 	public static final int COL = 10;
 
-	private int data[][]; // ROW x COL 의 배열
-	private int line; // 지운 줄 수
+	private int data[][]; 	// ROW x COL 의 배열
+	private int line; 		// 지운 줄 수
 
 	public TetrisData() {
 		data = new int[ROW][COL];
@@ -51,7 +51,8 @@ public class TetrisData {
 		}
 	}
 
-	public void clear() { // data 배열 초기화
+	// data 배열 초기화
+	public void clear() {
 		for (int i = 0; i < ROW; i++) {
 			for (int k = 0; k < COL; k++) {
 				data[i][k] = 0;
@@ -59,7 +60,8 @@ public class TetrisData {
 		}
 	}
 
-	public void dump() { // data 배열 내용 출력
+	// data 배열 내용 출력
+	public void dump() {
 		for (int i = 0; i < ROW; i++) {
 			for (int k = 0; k < COL; k++) {
 				System.out.print(data[i][k] + " ");

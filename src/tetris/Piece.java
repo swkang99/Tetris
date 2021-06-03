@@ -3,13 +3,13 @@ package tetris;
 import java.awt.Point;
 
 public abstract class Piece {
-	final int DOWN = 0; // 방향 지정
+	final int DOWN = 0; 		// 방향 지정
 	final int LEFT = 1;
 	final int RIGHT = 2;
-	protected int r[]; // Y축 좌표 배열
-	protected int c[]; // X축 좌표 배열
-	protected TetrisData data; // 테트리스 내부 데이터
-	protected Point center; // 조각의 중심 좌표
+	protected int r[]; 			// Y축 좌표 배열(row)
+	protected int c[]; 			// X축 좌표 배열(column)
+	protected TetrisData data; 	// 테트리스 내부 데이터
+	protected Point center; 	// 조각의 중심 좌표
 
 	public Piece(TetrisData data) {
 		r = new int[4];
@@ -30,11 +30,14 @@ public abstract class Piece {
 		return center.y;
 	}
 
-	public boolean copy() { // 값 복사
+	// 값 복사
+	public boolean copy() { 
 		boolean value = false;
 		int x = getX();
 		int y = getY();
-		if (getMinY() + y <= 0) { // 게임 종료 상황
+		
+		// 게임 종료 상황
+		if (getMinY() + y <= 0) { 
 			value = true;
 		}
 
@@ -44,7 +47,8 @@ public abstract class Piece {
 		return value;
 	}
 
-	public boolean isOverlap(int dir) { // 다른 조각과 겹치는지 파악
+	// 다른 조각과 겹치는지 파악
+	public boolean isOverlap(int dir) { 
 		int x = getX();
 		int y = getY();
 		switch (dir) {
@@ -113,7 +117,8 @@ public abstract class Piece {
 		return max;
 	}
 
-	public boolean moveDown() { // 아래로 이동
+	// 아래로 이동
+	public boolean moveDown() { 
 		if (center.y + getMaxY() + 1 < TetrisData.ROW) {
 			if (isOverlap(DOWN) != true) {
 				center.y++;
@@ -127,7 +132,8 @@ public abstract class Piece {
 		return false;
 	}
 
-	public void moveLeft() { // 왼쪽으로 이동
+	// 왼쪽으로 이동
+	public void moveLeft() { 
 		if (center.x + getMinX() - 1 >= 0)
 			if (isOverlap(LEFT) != true) {
 				center.x--;
@@ -135,7 +141,8 @@ public abstract class Piece {
 				return;
 	}
 
-	public void moveRight() { // 오른쪽으로 이동
+	// 오른쪽으로 이동
+	public void moveRight() { 
 		if (center.x + getMaxX() + 1 < TetrisData.COL)
 			if (isOverlap(RIGHT) != true) {
 				center.x++;
@@ -143,7 +150,8 @@ public abstract class Piece {
 				return;
 	}
 
-	public void rotate() { // 조각 회전
+	// 조각 회전
+	public void rotate() { 
 		int rc = roteType();
 		if (rc <= 1)
 			return;
@@ -157,7 +165,8 @@ public abstract class Piece {
 		}
 	}
 
-	public void rotate4() {  //조각 회전
+	// 조각 회전
+	public void rotate4() {
 		for(int i = 0; i < 4; i++) {
 			int temp = c[i];
 			c[i] = -r[i];
