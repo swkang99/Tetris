@@ -15,7 +15,7 @@ public abstract class Piece {
 		r = new int[4];
 		c = new int[4];
 		this.data = data;
-		center = new Point(5, 0);
+		center = new Point(5, 10);
 	}
 
 	public abstract int getType();
@@ -158,8 +158,6 @@ public abstract class Piece {
 
 		if (rc == 2) {
 			rotate4();
-			rotate4();
-			rotate4();
 		} else {
 			rotate4();
 		}
@@ -167,10 +165,38 @@ public abstract class Piece {
 
 	// 조각 회전
 	public void rotate4() {
-		for(int i = 0; i < 4; i++) {
-			int temp = c[i];
-			c[i] = -r[i];
-			r[i] = temp;
+		if (center.x > 0 && center.x < TetrisData.COL - 1) {	// 양쪽 끝에서 모든 조각의 회전을 제한 
+			
+			// 오른쪽 끝에서 Bar 조각의 회전을 제한
+			if (center.x == TetrisData.COL - 2) {
+				if (getMinX() == 0 && getMinY() == -2)
+					return;
+			}
+			
+			// 왼쪽 끝에서 Bar 조각의 회전을 제한
+			if (center.x == 1) {
+				if (getMinX() == 0 && getMaxY() == 2)
+					return;
+			}
+			
+			for (int i = 0; i < 4; i++) {
+				int temp = c[i];
+				c[i] = -r[i];
+				r[i] = temp;
+			}
 		}
+	}
+	
+	public void PrintMinMax() {
+
+		if (center.x == 0 || center.x == TetrisData.COL - 1) 
+			System.out.println("끝에 도달했음");
+		
+		if (center.x == 0 || center.x == TetrisData.COL - 1) 
+			System.out.println("끝에 도달했음");
+		
+		System.out.println("center.x: " + center.x + ", center.y: " + center.y);
+		System.out.println("MinX: " + this.getMinX() + ", MinY: " + this.getMinY());
+		System.out.println("MaxX: " + this.getMaxX() + ", MaxY: " + this.getMaxY());
 	}
 }
