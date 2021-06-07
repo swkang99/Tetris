@@ -10,12 +10,12 @@ public abstract class Piece {
 	protected int c[]; 			// X축 좌표 배열(column)
 	protected TetrisData data; 	// 테트리스 내부 데이터
 	protected Point center; 	// 조각의 중심 좌표
-
+	public boolean copied = false;
 	public Piece(TetrisData data) {
 		r = new int[4];
 		c = new int[4];
 		this.data = data;
-		center = new Point(5, 10);
+		center = new Point(5, 0);
 	}
 
 	public abstract int getType();
@@ -35,15 +35,19 @@ public abstract class Piece {
 		boolean value = false;
 		int x = getX();
 		int y = getY();
-		
+
 		// 게임 종료 상황
-		if (getMinY() + y <= 0) { 
+		if (getMinY() + y <= 0) {
 			value = true;
 		}
 
-		for (int i = 0; i < 4; i++) {
-			data.setAt(y + r[i], x + c[i], getType());
+		if (!copied) {
+			for (int i = 0; i < 4; i++) {
+				data.setAt(y + r[i], x + c[i], getType());
+			}
+			copied = true;
 		}
+		
 		return value;
 	}
 
@@ -128,7 +132,6 @@ public abstract class Piece {
 		} else {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -185,18 +188,5 @@ public abstract class Piece {
 				r[i] = temp;
 			}
 		}
-	}
-	
-	public void PrintMinMax() {
-
-		if (center.x == 0 || center.x == TetrisData.COL - 1) 
-			System.out.println("끝에 도달했음");
-		
-		if (center.x == 0 || center.x == TetrisData.COL - 1) 
-			System.out.println("끝에 도달했음");
-		
-		System.out.println("center.x: " + center.x + ", center.y: " + center.y);
-		System.out.println("MinX: " + this.getMinX() + ", MinY: " + this.getMinY());
-		System.out.println("MaxX: " + this.getMaxX() + ", MaxY: " + this.getMaxY());
 	}
 }

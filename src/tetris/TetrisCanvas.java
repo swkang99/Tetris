@@ -81,51 +81,41 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 
 	public void run() {
 		while (!stop) {
-			try {
-				if (makeNew) {
-					int random = (int) (Math.random() * Integer.MAX_VALUE) % 7;
-					switch (random) {
-					case 0:
-						current = new Bar(data);
-						break;
-					case 1:
-						current = new J(data);
-						break;
-					case 2:
-						current = new El(data);
-						break;
-					case 3:
-						current = new O(data);
-						break;
-					case 4:
-						current = new S(data);
-						break;
-					case 5:
-						current = new Tee(data);
-						break;
-					case 6:
-						current = new Z(data);
-						break;
-					}
-					makeNew = false;
+			if (makeNew) {
+				int random = (int) (Math.random() * Integer.MAX_VALUE) % 7;
+				switch (random) {
+				case 0:
+					current = new Bar(data);
+					break;
+				case 1:
+					current = new J(data);
+					break;
+				case 2:
+					current = new El(data);
+					break;
+				case 3:
+					current = new O(data);
+					break;
+				case 4:
+					current = new S(data);
+					break;
+				case 5:
+					current = new Tee(data);
+					break;
+				case 6:
+					current = new Z(data);
+					break;
 				}
-				// 현재 만들어진 테트리스 조각 아래로 이동
-				else {
-					if (current.moveDown()) {
-						makeNew = true;
-						if (current.copy()) {
-							stop();
-							int score = data.getLine() * 175 * level;
-							JOptionPane.showMessageDialog(this, "게임끝\n점수 : " + score);
-						}
-						current = null;
-					}
-					data.removeLines();
+				makeNew = false;
+			}
+			// 현재 만들어진 테트리스 조각 아래로 이동
+			else {
+				if (data.timeCtrl(1)) {
+					Down();
 				}
 				repaint();
-				Thread.currentThread().sleep(interval / level);
-			} catch (Exception e) {
 			}
+			// Thread.currentThread().sleep(interval / level);
 		}
 	}
 
@@ -148,17 +138,9 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			repaint();
 			break;
 		case 40: // 아랫쪽 화살표
-			boolean temp = current.moveDown();
-			if (temp) {
-				makeNew = true;
-				if (current.copy()) {
-					stop();
-					int score = data.getLine() * 175 * level;
-					JOptionPane.showMessageDialog(this, "게임끝\n점수 : " + score);
-				}
-			}
-			data.removeLines();
+			Down();
 			repaint();
+			break;
 		}
 	}
 
@@ -166,5 +148,17 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	}
 
 	public void keyTyped(KeyEvent e) {
+	}
+	
+	public void Down() {
+		if (current.moveDown()) {
+			makeNew = true;
+			if (current.copy()) {
+				stop();
+				int score = data.getLine() * 175 * level;
+				JOptionPane.showMessageDialog(this, "게임끝\n점수 : " + score);
+			}
+			data.removeLines();
+		}
 	}
 }
