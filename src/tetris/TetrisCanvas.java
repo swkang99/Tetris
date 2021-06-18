@@ -113,6 +113,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 				if (data.timeCtrl(1)) {
 					Down();
 				}
+				data.removeLines();
 				repaint();
 			}
 			// Thread.currentThread().sleep(interval / level);
@@ -158,7 +159,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 				int score = data.getLine() * 175 * level;
 				JOptionPane.showMessageDialog(this, "게임끝\n점수 : " + score);
 			}
-			data.removeLines();
+			
 		}
 	}
 }
