@@ -189,4 +189,10 @@ public abstract class Piece {
 			}
 		}
 	}
+	
+	public void moveBottom() {
+		for(int i = 0; i < TetrisData.ROW - 1; i++) {
+			this.moveDown();
+		}
+	}
 }

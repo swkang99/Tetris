@@ -126,6 +126,10 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 			return;
 
 		switch (e.getKeyCode()) {
+		case 32: // 스페이스 바
+			current.moveBottom();
+			repaint();
+			break;
 		case 37: // 왼쪽 화살표
 			current.moveLeft();
 			repaint();
