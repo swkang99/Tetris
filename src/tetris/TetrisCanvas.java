@@ -12,6 +12,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected int margin = 20;
 	protected boolean stop, makeNew;
 	protected Piece current;
+	protected Piece temp;
+	protected Piece next;
 	protected int interval = 2000;
 	protected int level = 2;
 
@@ -28,6 +30,8 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 		colors[5] = new Color(255, 150, 0); // 황토색
 		colors[6] = new Color(210, 0, 240); // 보라색
 		colors[7] = new Color(40, 0, 240); 	// 파란색
+
+		temp = randomPiece();
 	}
 
 	// 게임 시작
@@ -70,6 +74,27 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 						margin / 2 + w * (current.getY() + current.r[i]), w, w, true);
 			}
 		}
+		
+		// design 미리보기 상자
+		for (int i = 0; i < 4; i++) {
+			for (int k = 0; k < 4; k++) {
+				if (data.getAt(i, k) == 0) {
+					g.setColor(colors[data.getAt(i, k)]);
+					g.draw3DRect(300 + w * k, 30 + w * i, w, w, true);
+				} else {
+					g.setColor(colors[data.getAt(i, k)]);
+					g.fill3DRect(300 + w * k, 200 + w * i, w, w, true);
+				}
+			}
+		}
+		
+		// 미리보기 상자 부분 블럭 생성
+		if (next != null) {
+			for (int i = 0; i < 4; i++) {
+				g.setColor(colors[next.getType()]);
+				g.fill3DRect(300 + w * (1 + next.c[i]), 30 + w * (1 + next.r[i]), w, w, true);
+			}
+		}
 	}
 
 	// 테트리스 판의 크기 지정
@@ -82,30 +107,9 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	public void run() {
 		while (!stop) {
 			if (makeNew) {
-				int random = (int) (Math.random() * Integer.MAX_VALUE) % 7;
-				switch (random) {
-				case 0:
-					current = new Bar(data);
-					break;
-				case 1:
-					current = new J(data);
-					break;
-				case 2:
-					current = new El(data);
-					break;
-				case 3:
-					current = new O(data);
-					break;
-				case 4:
-					current = new S(data);
-					break;
-				case 5:
-					current = new Tee(data);
-					break;
-				case 6:
-					current = new Z(data);
-					break;
-				}
+				current = temp;
+				next = randomPiece();
+				temp = next;
 				makeNew = false;
 			}
 			// 현재 만들어진 테트리스 조각 아래로 이동
@@ -163,7 +167,38 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 				int score = data.getLine() * 175 * level;
 				JOptionPane.showMessageDialog(this, "게임끝\n점수 : " + score);
 			}
-			
 		}
+	}
+	
+	public Piece randomPiece() {
+		Piece pic;
+		int random = (int) (Math.random() * Integer.MAX_VALUE) % 7;
+		switch (random) {
+		case 0:
+			pic = new Bar(data);
+			break;
+		case 1:
+			pic = new J(data);
+			break;
+		case 2:
+			pic = new El(data);
+			break;
+		case 3:
+			pic = new O(data);
+			break;
+		case 4:
+			pic = new S(data);
+			break;
+		case 5:
+			pic = new Tee(data);
+			break;
+		case 6:
+			pic = new Z(data);
+			break;
+		default:
+			pic = null;
+			break;
+		}
+		return pic;
 	}
 }
