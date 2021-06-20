@@ -168,7 +168,8 @@ public abstract class Piece {
 
 	// 조각 회전
 	public void rotate4() {
-		if (center.x > 0 && center.x < TetrisData.COL - 1) {	// 양쪽 끝에서 모든 조각의 회전을 제한 
+		// 양쪽 끝에서 모든 조각의 회전을 제한 
+		if (center.x > 0 && center.x < TetrisData.COL - 1) {	
 			
 			// 오른쪽 끝에서 Bar 조각의 회전을 제한
 			if (center.x == TetrisData.COL - 2) {

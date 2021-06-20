@@ -16,6 +16,7 @@ public class TetrisCanvas extends JPanel implements Runnable, KeyListener {
 	protected Piece next;
 	protected int interval = 2000;
 	protected int level = 2;
+	protected JLabel scoreLabel;
 
 	public TetrisCanvas() {
 		data = new TetrisData();

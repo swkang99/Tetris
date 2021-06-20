@@ -77,7 +77,5 @@ public class MyTetris extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(312, 131, 77, 29);
 		tetrisCanvas.add(lblNewLabel);
-		
-		
 	}
 }
